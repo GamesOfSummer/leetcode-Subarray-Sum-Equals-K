@@ -5,6 +5,27 @@ import {
     validateFxn,
 } from './helpers.js';
 
+function subarraySum2(nums: number[], target: number): number {
+    let map = new Map();
+    map.set(0, 1);
+
+    let sum = 0;
+    let counter = 0;
+
+    for (let num of nums) {
+        sum += num;
+
+        let value = map[sum - target];
+        if (value) {
+            counter += value;
+        }
+
+        let value2 = map[sum];
+        map[sum] = (value2 || 0) + 1;
+    }
+    return counter;
+}
+
 function subarraySum(nums: number[], target: number): number {
     let counter = 0;
 
@@ -29,6 +50,8 @@ function subarraySum(nums: number[], target: number): number {
 }
 
 consoleStart();
+
+validateFxn(subarraySum2([1, 1, 1], 2), 2);
 
 validateFxn(subarraySum([1, 2, 3], 3), 2);
 validateFxn(subarraySum([1, 1, 1], 2), 2);
