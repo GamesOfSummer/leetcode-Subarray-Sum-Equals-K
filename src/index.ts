@@ -5,37 +5,33 @@ import {
     validateFxn,
 } from './helpers.js';
 
-function searchMatrix(array: number[][], target: number): boolean {
-    let row = 0;
-    let col = array[0].length - 1;
-    while (row < array.length && col >= 0) {
-        if (array[row][col] === target) {
-            return true;
-        } else if (array[row][col] > target) {
-            col--;
-        } else {
-            row++;
+function subarraySum(nums: number[], target: number): number {
+    let counter = 0;
+
+    for (let i = 0; i < nums.length; i++) {
+        let firstNumber = nums[i];
+        let total = firstNumber;
+        for (let j = i + 1; j < nums.length; j++) {
+            let secondNumber = nums[j];
+            total += secondNumber;
+
+            if (total === target) {
+                counter++;
+            }
+        }
+
+        if (firstNumber === target) {
+            counter++;
         }
     }
 
-    return false;
+    return counter;
 }
 
 consoleStart();
 
-validateFxn(
-    searchMatrix(
-        [
-            [1, 4, 7, 11, 15],
-            [2, 5, 8, 12, 19],
-            [3, 6, 9, 16, 22],
-            [10, 13, 14, 17, 24],
-            [18, 21, 23, 26, 30],
-        ],
-        5
-    ),
-    true
-);
+validateFxn(subarraySum([1, 2, 3], 3), 2);
+validateFxn(subarraySum([1, 1, 1], 2), 2);
 
 consoleEnd();
 
