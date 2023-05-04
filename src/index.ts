@@ -6,22 +6,21 @@ import {
 } from './helpers.js';
 
 function subarraySum2(nums: number[], target: number): number {
-    let map = new Map();
+    const map = new Map();
     map.set(0, 1);
 
-    let sum = 0;
     let counter = 0;
+    let sum = 0;
 
-    for (let num of nums) {
-        sum += num;
+    for (let i = 0; i < nums.length; i++) {
+        sum += nums[i];
 
-        let value = map[sum - target];
-        if (value) {
-            counter += value;
+        if (map.has(sum - target)) {
+            counter += map.get(sum - target);
         }
 
-        let value2 = map[sum];
-        map[sum] = (value2 || 0) + 1;
+        let newCounter = (map.has(sum) ? map.get(sum) : 0) + 1;
+        map.set(sum, newCounter);
     }
     return counter;
 }
